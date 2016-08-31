@@ -50,7 +50,7 @@ crossvalidation = KFold(n=wine.shape[0], n_folds=13, shuffle=True, random_state=
 scores = cross_val_score(regression, wine, quality, scoring="mean_squared_error", cv=crossvalidation, n_jobs=1)
 print("Folds: %i, mean squared error: %.2f std: %.2f" %(len(scores), np.mean(np.abs(scores)), np.std(scores)))
 
-#the mean quared error is still too bad. we need feature selection
+#the mean quared error is still not optimal. we need feature selection
 
 #print all f_scores for each feature
 f_selector = SelectPercentile(f_regression, percentile=25)
@@ -68,7 +68,7 @@ print("Optimal number of features: %d" % greedy.n_features_)
 
 """
 the outcome is not really optimal
-we should analyse the data with another classifier like nearest neighbor
+we should analyze the data with another classifier like nearest neighbor
 we gonna start a grid search
 """
 range = [1,2,3,4,5,6,7,8,9,10,11]
