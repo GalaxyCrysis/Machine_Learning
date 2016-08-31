@@ -50,7 +50,7 @@ crossvalidation = KFold(n=wine.shape[0], n_folds=13, shuffle=True, random_state=
 scores = cross_val_score(regression, wine, quality, scoring="mean_squared_error", cv=crossvalidation, n_jobs=1)
 print("Folds: %i, mean squared error: %.2f std: %.2f" %(len(scores), np.mean(np.abs(scores)), np.std(scores)))
 
-#the mean quared error is still too bad. we need feature seletion
+#the mean quared error is still too bad. we need feature selection
 
 #print all f_scores for each feature
 f_selector = SelectPercentile(f_regression, percentile=25)
