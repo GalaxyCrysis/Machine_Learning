@@ -66,6 +66,10 @@ greedy = RFECV(estimator=regression, cv=13, scoring="mean_squared_error")
 greedy.fit(wine,quality)
 print("Optimal number of features: %d" % greedy.n_features_)
 
+#finally lets predict a sample wine
+sample = [3,0.22,0.21,4.2,32,34,74,0.9733,3.19,0.42,7.7]
+print("Sample: %.3f" %(regression.predict(sample)))
+
 """
 the outcome is not really optimal
 we should analyze the data with another classifier like nearest neighbor
