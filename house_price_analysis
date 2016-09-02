@@ -16,7 +16,7 @@ from sklearn.ensemble import RandomForestRegressor
 
 
 """
-housing data for suburbs from Boston. My goal is to predict the value of the houses bases of the data we have with Regression.
+house data for suburbs from Boston. My goal is to predict the value of the houses based on the data we have with Regression.
 NOTE: the data are from http://archive.ics.uci.edu/ml/machine-learning-databases/housing/housing.data
 I downloaded the data with urllib and added the column names to the text file
 The data are not prepared yet, since there are more than 1 seperator. We need to fix that first
@@ -125,13 +125,10 @@ print("SVR test performance: %.2f" % gridsearch.score(xtest,ytest))
 print("SVR MSE : %.3f" %mean_squared_error(y_true=ytest, y_pred=gridsearch.predict(xtest)))
 print("SVR best params: %s"%gridsearch.best_params_)
 
-
-
-
 """
 with 'epsilon': 1, 'degree': 2, 'kernel': 'rbf', 'C': 100.0
 Our accuracy was 0.85 and MSE 13.919. Really good results! Much better than all other tests before
-However i just want to test if we can get better results with Random FOrest or Grdient Boosting
+However i just want to test if we can get better results with Random Forest 
 """
 
 random_forst = RandomForestRegressor(n_estimators=250, random_state=1)
@@ -154,10 +151,8 @@ print("Random Forest best parameter: %s"%search_algo.best_params_)
 print("Random Forest best MSE: %.3f" % search_algo.best_score_)
 
 """
-'epsilon': 1, 'degree': 2, 'kernel': 'rbf', 'C': 100.0
-So in the end SVR was the best classifier. So we gonna use SVR to predict something
+So in the end SVR was the best regressor. So we gonna use SVR to predict something
 """
-
 svr = SVR(epsilon=1, degree=2,kernel="rbf",C=100.0)
 svr.fit(data,target)
 sample = [0.03731,0.01,8.070,0,0.3690,5.3610,79.90,4.9371,3,252.0,18.83,397.90,9.10]
