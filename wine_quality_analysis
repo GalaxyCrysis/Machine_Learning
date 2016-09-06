@@ -47,11 +47,15 @@ print("Mean Squared Error: %.2f" % mean_squared_error(y_true=y_test, y_pred=regr
 
 #the mean squared error was 0.56. lets try it again with cross validation
 crossvalidation = KFold(n=wine.shape[0], n_folds=13, shuffle=True, random_state=1)
-#get the score from cross val score
-scores = cross_val_score(regression, wine, quality, scoring="mean_squared_error", cv=crossvalidation, n_jobs=1)
-print("Folds: %i, mean squared error: %.2f std: %.2f" %(len(scores), np.mean(np.abs(scores)), np.std(scores)))
+#the mean squared error was 0.56. Not really god, lets try it again with cross validation
+for i in range(2,12):
+    crossvalidation = KFold(n=wine.shape[0],n_folds=i,shuffle=True,random_state=1)
+    scores = cross_val_score(regression, wine, quality, scoring="mean_squared_error", cv=crossvalidation, n_jobs=1)
+    print("Folds: %i, mean squared error: %.2f std: %.2f" % (len(scores), np.mean(np.abs(scores)), np.std(scores)))
 
-# we need feature selection to see if we can get better results
+
+
+#the mean quared error is still the same. we need feature seletion  to see if we can get better results
 
 #print all f_scores for each feature
 f_selector = SelectPercentile(f_regression, percentile=25)
@@ -66,6 +70,19 @@ with a greedy search we can get the optimal number of features
 greedy = RFECV(estimator=regression, cv=13, scoring="mean_squared_error")
 greedy.fit(wine,quality)
 print("Optimal number of features: %d" % greedy.n_features_)
+
+#however i wanna test logistic regression now because y data are int. We might get better results
+logistic = LogisticRegression()
+ovr = OneVsRestClassifier(LogisticRegression()).fit(x_train,y_train)
+ovo = OneVsOneClassifier(LogisticRegression()).fit(x_train,y_train)
+#print accuracy
+print("OnevsRest Score: %.3f"% ovr.score(x_test,y_test))
+print("OneVsOne Score: %.3f"% ovo.score(x_test,y_test))
+#print MSE
+print("OneVsRest Mean Squared Error: %.2f" % mean_squared_error(y_true=y_test,y_pred=ovr.predict(x_test)))
+print("OneVsOne Mean Squared Error: %.2f" % mean_squared_error(y_true=y_test,y_pred=ovo.predict(x_test)))
+
+#an accuracy of 0.539 is still not optimal but much better than linear regression
 
 #finally lets predict a sample wine
 sample = [3,0.22,0.21,4.2,32,34,74,0.9733,3.19,0.42,7.7]
@@ -85,6 +102,7 @@ search.fit(wine,quality)
 print("Best parameter: %s" %search.best_params_)
 print("CV- accuracy: %.3f" %search.best_score_)
 
+#an accuracy of 0.49 is not optimal neither which means some of the features have nothing to do with wine quality. 
 
 
 
