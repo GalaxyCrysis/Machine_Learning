@@ -37,20 +37,21 @@ regression.fit(x_train,y_train)
 
 #get score
 print(regression.score(x_test,y_test))
-#lets see which feature are most responsible for the quality
+
+#lets see which features are most responsible for the quality
 print([name+":"+str(round(coef,1)) for name, coef in zip(
 wine.columns.values, regression.coef_,)])
 
-#the score was bad, letzs see the mean squared error
+#the score was bad, what about the mean squared error?
 print("Mean Squared Error: %.2f" % mean_squared_error(y_true=y_test, y_pred=regression.predict(x_test)))
 
-#the mean squared error was 0.56. Not really god, lets try it again with cross validation
+#the mean squared error was 0.56. lets try it again with cross validation
 crossvalidation = KFold(n=wine.shape[0], n_folds=13, shuffle=True, random_state=1)
 #get the score from cross val score
 scores = cross_val_score(regression, wine, quality, scoring="mean_squared_error", cv=crossvalidation, n_jobs=1)
 print("Folds: %i, mean squared error: %.2f std: %.2f" %(len(scores), np.mean(np.abs(scores)), np.std(scores)))
 
-#the mean quared error is still not optimal. we need feature selection
+# we need feature selection to see if we can get better results
 
 #print all f_scores for each feature
 f_selector = SelectPercentile(f_regression, percentile=25)
@@ -78,16 +79,12 @@ we gonna start a grid search
 range = [1,2,3,4,5,6,7,8,9,10,11]
 classifier = KNeighborsClassifier(n_neighbors=3, metric="minkowski",p=2, weights="uniform")
 grid = {"n_neighbors": range, "weights":["uniform","distance"], "p": [1,2]}
-score_metric = "accuracy"
 
-search = GridSearchCV(estimator=classifier, param_grid=grid, scoring=score_metric, n_jobs=1, refit=True, cv=13)
+search = GridSearchCV(estimator=classifier, param_grid=grid, scoring="accuracy", n_jobs=1, refit=True, cv=13)
 search.fit(wine,quality)
 print("Best parameter: %s" %search.best_params_)
 print("CV- accuracy: %.3f" %search.best_score_)
 
-"""
-The lession is clear that the various features are not really that responsible for the Wine Quality
-I think grape types, wine brand etc are more responsible but are missing in the data
-"""
+
 
 
