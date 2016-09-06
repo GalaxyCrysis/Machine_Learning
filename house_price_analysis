@@ -17,8 +17,7 @@ from sklearn.ensemble import RandomForestRegressor
 
 """
 house data for suburbs from Boston. My goal is to predict the value of the houses based on the data we have with Regression.
-NOTE: the data are from http://archive.ics.uci.edu/ml/machine-learning-databases/housing/housing.data
-I downloaded the data with urllib and added the column names to the text file
+NOTE: I downloaded the data with urllib and added the column names to the text file
 The data are not prepared yet, since there are more than 1 seperator. We need to fix that first
 """
 
