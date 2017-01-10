@@ -102,7 +102,7 @@ search.fit(wine,quality)
 print("Best parameter: %s" %search.best_params_)
 print("CV- accuracy: %.3f" %search.best_score_)
 
-#an accuracy of 0.49 is not optimal neither which means some of the features have nothing to do with wine quality. 
+
 
 
 
