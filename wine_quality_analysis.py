@@ -71,7 +71,7 @@ greedy = RFECV(estimator=regression, cv=13, scoring="mean_squared_error")
 greedy.fit(wine,quality)
 print("Optimal number of features: %d" % greedy.n_features_)
 
-#however i wanna test logistic regression now because y data are int. We might get better results
+#however i wanna test logistic regression now because y data look like data to be classified. We might get better results
 logistic = LogisticRegression()
 ovr = OneVsRestClassifier(LogisticRegression()).fit(x_train,y_train)
 ovo = OneVsOneClassifier(LogisticRegression()).fit(x_train,y_train)
